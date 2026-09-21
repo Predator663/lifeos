@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- 'wasm-unsafe-eval' is required by sql.js (the SQLite WASM build that
+         backs the Android port). connect-src allows the Anthropic API for the
+         AI assistant; on Android those requests are actually made natively by
+         CapacitorHttp, but the entry stays honest about where the app talks. -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' data: file: https://localhost; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval'; img-src 'self' data: file: blob: https://localhost; connect-src 'self' data: https://api.anthropic.com https://localhost" />
+    <!-- viewport-fit=cover lets the layout paint under the Android status /
+         gesture bars; env(safe-area-inset-*) in global.css pads it back. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>LifeOS</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

@@ -1,0 +1,24 @@
+node_modules/
+dist/
+release/
+*.log
+
+# ── Android / Capacitor build outputs ──
+android/build/
+android/app/build/
+android/.gradle/
+android/.idea/
+android/local.properties
+android/app/src/main/assets/public/
+android/app/src/main/assets/capacitor.config.json
+android/app/src/main/assets/capacitor.plugins.json
+android/app/capacitor.build.gradle
+android/capacitor.settings.gradle
+android/capacitor-cordova-android-plugins/
+*.apk
+*.aab
+
+# ── Release signing — never commit these ──
+android/keystore.properties
+*.keystore
+*.jks

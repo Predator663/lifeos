@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths xmlns:android="http://schemas.android.com/apk/res/android">
+    <external-path name="my_images" path="." />
+    <cache-path name="my_cache_images" path="." />
+    <!-- Directory.Data maps to getFilesDir(); without this entry the
+         Share sheet cannot hand out a database export, a report or an
+         attachment, because they all live there. -->
+    <files-path name="my_files" path="." />
+</paths>

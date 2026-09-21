@@ -1,0 +1,33 @@
+{
+  "appId": "com.bert.lifeos",
+  "appName": "LifeOS",
+  "webDir": "dist",
+  "android": {
+    "backgroundColor": "#0b0e14",
+    "allowMixedContent": false
+  },
+  "server": {
+    "androidScheme": "https"
+  },
+  "plugins": {
+    "CapacitorHttp": {
+      "enabled": true
+    },
+    "LocalNotifications": {
+      "smallIcon": "ic_stat_lifeos",
+      "iconColor": "#e8500a"
+    },
+    "SplashScreen": {
+      "launchShowDuration": 600,
+      "backgroundColor": "#0b0e14",
+      "androidSplashResourceName": "splash",
+      "androidScaleType": "CENTER_CROP",
+      "showSpinner": false
+    },
+    "StatusBar": {
+      "style": "DARK",
+      "backgroundColor": "#0b0e14",
+      "overlaysWebView": false
+    }
+  }
+}

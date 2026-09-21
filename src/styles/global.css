@@ -1,0 +1,250 @@
+:root {
+  --bg: #0b0e14;
+  --bg2: #10141d;
+  --bg3: #161b26;
+  --bg4: #1d2330;
+  --border: #232a38;
+  --text: #eef1f6;
+  --text2: #a7b0c0;
+  --text3: #6b7688;
+  --accent: #e8500a;
+  --accent-soft: rgba(232, 80, 10, 0.15);
+  --green: #22c55e;
+  --red: #ef4444;
+  --blue: #3b82f6;
+  --purple: #a855f7;
+  --yellow: #eab308;
+  --radius: 14px;
+  --radius-sm: 9px;
+  --font-head: 'Syne', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+  --shadow: 0 8px 30px rgba(0,0,0,.35);
+}
+
+* { box-sizing: border-box; }
+html, body, #root { height: 100%; margin: 0; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+  /* Removes Chrome's default ~300ms tap delay and the double-tap-to-zoom
+     gesture, so every button in the app responds the instant it's
+     touched instead of feeling like a web page. Inputs/textareas opt
+     back into normal touch handling below so text selection still works. */
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+h1, h2, h3, .heading { font-family: var(--font-head); }
+
+.input, .textarea { touch-action: auto; }
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-thumb { background: var(--bg4); border-radius: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+
+.app-shell { display: flex; height: 100vh; }
+
+.card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  transition: border-color .2s, transform .2s;
+}
+.card:hover { border-color: #2c3444; }
+
+.input, .select, .textarea {
+  background: var(--bg3);
+  border: 1.5px solid var(--border);
+  color: var(--text);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  font-family: var(--font-body);
+  font-size: 13.5px;
+  outline: none;
+  transition: border-color .18s, box-shadow .18s;
+  width: 100%;
+}
+.input:focus, .select:focus, .textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+.textarea { resize: vertical; min-height: 80px; font-family: var(--font-body); }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  border: none; border-radius: var(--radius-sm); padding: 10px 16px;
+  font-family: var(--font-body); font-weight: 600; font-size: 13.5px;
+  cursor: pointer; transition: transform .15s, background .2s, box-shadow .2s;
+}
+.btn:active { transform: scale(.96); }
+.btn-primary { background: var(--accent); color: #fff; box-shadow: 0 4px 16px rgba(232,80,10,.3); }
+.btn-primary:hover { background: #f4600f; }
+.btn-secondary { background: var(--bg4); color: var(--text2); }
+.btn-secondary:hover { background: #262e3d; color: var(--text); }
+.btn-ghost { background: transparent; color: var(--text2); }
+.btn-ghost:hover { background: var(--bg3); color: var(--text); }
+.btn-danger { background: rgba(239,68,68,.12); color: var(--red); }
+.btn-danger:hover { background: rgba(239,68,68,.22); }
+.btn-icon { padding: 8px; border-radius: 999px; }
+.btn-sm { padding: 6px 12px; font-size: 12px; }
+
+.badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 3px 9px; border-radius: 999px; font-size: 11px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .3px;
+}
+
+.page-title { font-size: 24px; font-weight: 800; margin: 0 0 2px; }
+.page-sub { color: var(--text3); font-size: 13px; margin-bottom: 22px; }
+
+.empty-state { text-align: center; padding: 48px 20px; color: var(--text3); }
+.empty-icon { font-size: 40px; margin-bottom: 10px; opacity: .6; }
+
+.checkbox-circle {
+  width: 22px; height: 22px; border-radius: 999px; border: 2px solid var(--border);
+  display: flex; align-items: center; justify-content: center; cursor: pointer;
+  transition: border-color .2s, background .2s; flex-shrink: 0;
+}
+.checkbox-circle.done { background: var(--green); border-color: var(--green); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .spin { animation: spin 1s linear infinite; }
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Desktop main pane ───────────────────────────────────────────────
+   Was an inline style on <main> in App.jsx; moved here unchanged so the
+   mobile block below can override it in one place. Identical rendering
+   on the desktop build. */
+.app-main { flex: 1; overflow: auto; padding: 28px 32px; }
+
+/* ── Phone layout (<= 768px) ─────────────────────────────────────────
+   Everything mobile lives in this one block. Above the breakpoint not a
+   single rule here applies, which is what keeps the Windows build
+   pixel-identical to what it was before the Android port. */
+@media (max-width: 768px) {
+  .app-shell.mobile { flex-direction: column; height: 100vh; height: 100dvh; }
+
+  .app-main {
+    padding: 16px;
+    /* Clear the bottom bar plus the gesture inset. */
+    padding-bottom: calc(76px + env(safe-area-inset-bottom, 0px));
+    padding-top: calc(16px + env(safe-area-inset-top, 0px));
+    -webkit-overflow-scrolling: touch;
+    /* Stops the whole page rubber-banding/bouncing past its own top or
+       bottom edge — that bounce is what makes a WebView feel like a
+       website instead of an installed app. Scrolling still works
+       normally; only the overshoot is contained. */
+    overscroll-behavior-y: contain;
+  }
+
+  /* No horizontal page overflow, ever. */
+  html, body, #root { overflow-x: hidden; max-width: 100vw; }
+
+  /* The pages lay their grids out with inline gridTemplateColumns, and
+     there are dozens of them. Rather than edit every page (and risk
+     changing the desktop look), collapse any inline grid to a single
+     column here. !important is required precisely because the rule it
+     overrides is inline. Add .keep-cols to a grid that should survive —
+     used by the small 2-up stat rows that still read fine on a phone. */
+  [style*="grid-template-columns"]:not(.keep-cols):not(.calendar-grid) {
+    grid-template-columns: 1fr !important;
+  }
+  .keep-cols { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+
+  /* Desktop min-widths would force a sideways scroll on a 360px screen. */
+  [style*="min-width"]:not(.keep-min) { min-width: 0 !important; }
+
+  .card { padding: 16px; }
+
+  /* Touch targets. 44px is the smallest reliably hittable control. */
+  .btn, .bottom-nav-item, .more-sheet-item { min-height: 44px; }
+  .btn-icon { min-width: 44px; }
+
+  /* Anything under 16px makes Android zoom the page on focus. */
+  .input, .select, .textarea, input, select, textarea { font-size: 16px !important; }
+
+  /* Finance's tab strip scrolls sideways instead of wrapping. */
+  .tabs, .finance-tabs {
+    display: flex;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .tabs::-webkit-scrollbar, .finance-tabs::-webkit-scrollbar { display: none; }
+  .tabs > *, .finance-tabs > * { flex: 0 0 auto; }
+
+  /* Month view: 7 columns have to stay 7 columns, just smaller. */
+  .calendar-grid.calendar-grid { grid-template-columns: repeat(7, minmax(0, 1fr)) !important; gap: 4px !important; }
+  .calendar-cell { min-height: 56px !important; padding: 4px !important; font-size: 12px; }
+
+  /* Tables are the one thing allowed to scroll sideways, inside
+     themselves rather than dragging the whole page with them. */
+  .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+}
+
+/* ── Bottom navigation ───────────────────────────────────────────────
+   Only ever rendered under the breakpoint (App.jsx gates it), but the
+   styles are unconditional so there is no flash while the media query
+   resolves. */
+.bottom-nav {
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  z-index: 180;
+  display: flex;
+  background: rgba(16, 20, 29, .96);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid var(--border);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+.bottom-nav-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  padding: 8px 2px;
+  background: none;
+  border: 0;
+  color: var(--text3);
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.bottom-nav-item.active { color: var(--accent); }
+.bottom-nav-item:active { background: var(--bg3); }
+
+.more-sheet {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+  border-radius: 18px 18px 0 0;
+  padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+}
+.more-sheet-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 18px;
+  border-bottom: 1px solid var(--border);
+}
+.more-sheet-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  background: none;
+  border: 0;
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 15px;
+  text-align: left;
+  cursor: pointer;
+}
+.more-sheet-item.active { color: var(--accent); }
+.more-sheet-item:active { background: var(--bg3); }
